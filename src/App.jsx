@@ -1,28 +1,18 @@
-import { useEffect, useState } from "react";
-import InventoryPage from "./pages/InventoryPage"; 
-import LoginPage from "./pages/LoginPage";
+import { useState } from "react";
+import InventoryPage from "./pages/InventoryPage";
+import AuthContainer from "./components/AuthContainer";
 
 function App() {
-  const [token, setToken] = useState(localStorage.getItem("jwtToken") || null);
-
-  const handleLogin = (jwt) => {
-    console.log('-----handleLogin: ' + jwt);
-    localStorage.setItem("jwtToken", jwt);
-    setToken(jwt);
-  };
-
-   const handleLogout = () => {
-    setToken(null); // reset state to show login page
-  };
+  const [token, setToken] = useState(null);
 
   return (
-    <div>
+    <>
       {token ? (
-        <InventoryPage token={token} onLogout={handleLogout} />
+        <InventoryPage token={token} onLogout={() => setToken(null)} />
       ) : (
-        <LoginPage onLogin={handleLogin} />
+        <AuthContainer onLogin={setToken} />
       )}
-    </div>
+    </>
   );
 }
 
