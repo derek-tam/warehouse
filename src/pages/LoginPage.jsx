@@ -9,7 +9,7 @@ export default function LoginPage({ onLogin, onSwitch }) {
     e.preventDefault();
     try {
       const res = await login(username, password);
-      onLogin(res.data.token); // pass JWT to App.jsx
+      onLogin(res.data.token, res.data.role); // pass JWT to App.jsx
     } catch {
       alert("Invalid credentials");
     }

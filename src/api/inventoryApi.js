@@ -1,11 +1,18 @@
 import axios from "axios";
 
-const API_BASE = "http://localhost:8080/api/inventory";
+const BASE_URL = "http://localhost:8080/api";
 
-export const getInventory = () => axios.get(API_BASE);
+export const getInventory = (token) =>
+  axios.get(`${BASE_URL}/inventory`, { headers: { Authorization: `Bearer ${token}` } });
 
-export const receiveGoods = (data) =>
-  axios.post(`${API_BASE}/receive`, data);
+export const receiveGoods = (item, token) =>
+  axios.post(`${BASE_URL}/inventory/receive`, item, { headers: { Authorization: `Bearer ${token}` } });
 
-export const shipGoods = (data) =>
-  axios.post(`${API_BASE}/ship`, data);
+export const shipGoods = (item, token) =>
+  axios.post(`${BASE_URL}/inventory/ship`, item, { headers: { Authorization: `Bearer ${token}` } });
+
+export const getOrders = (token) =>
+  axios.get(`${BASE_URL}/orders`, { headers: { Authorization: `Bearer ${token}` } });
+
+export const updateOrderStatus = (orderId, status, token) =>
+  axios.post(`${BASE_URL}/orders/${orderId}/status`, { status }, { headers: { Authorization: `Bearer ${token}` } });
